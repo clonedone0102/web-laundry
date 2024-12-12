@@ -13,8 +13,8 @@ class database {
                 $this->mysqli,
                 "weblad.mysql.database.azure.com",
                 "hasara",
-                "{your_password}",
-                "{your_database}",
+                "{Hasara354}",
+                "{weblad}",
                 3306,
                 MYSQLI_CLIENT_SSL
             )) {
