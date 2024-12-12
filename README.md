@@ -1,3 +1,5 @@
+kami membuat website ini menggunakan template dibawah ini
+
 # Laundry OnLine
 
 ### Dibuat oleh :
