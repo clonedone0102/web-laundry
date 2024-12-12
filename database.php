@@ -1,37 +1,47 @@
 <?php
-class database{
-    public function __construct()
-    {
-        try{
-            $serverName = 'localhost';
-            $userName = 'root';
-            $password = '';
-            $dbName = 'laundry';
-            $this-> pdo = new PDO("mysql:host=$serverName;port=3306;dbname=$dbName",$userName, $password);
-            $this-> pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }
-        catch(PDOException $e){
-            echo 'Error, dikarenakan ' . $e ->getMessage();
+class database {
+    private $mysqli;
+
+    public function __construct() {
+        try {
+            // Konfigurasi koneksi menggunakan SSL
+            $this->mysqli = mysqli_init();
+            mysqli_ssl_set($this->mysqli, NULL, NULL, "{path to CA cert}", NULL, NULL);
+
+            // Koneksi ke database
+            if (!mysqli_real_connect(
+                $this->mysqli,
+                "weblad.mysql.database.azure.com",
+                "hasara",
+                "{your_password}",
+                "{your_database}",
+                3306,
+                MYSQLI_CLIENT_SSL
+            )) {
+                throw new Exception("Connection failed: " . mysqli_connect_error());
+            }
+        } catch (Exception $e) {
+            echo 'Error, dikarenakan: ' . $e->getMessage();
         }
     }
 
-    public function tambah_data($nama, $email, $password, $nomor_telepon){
+    public function tambah_data($nama, $email, $password, $nomor_telepon) {
         $sql = "INSERT INTO users (name, email, password, nomor_telepon) 
-        VALUES (:name, :email, :password, :nomor_telepon)";
-        $stmt = $this-> pdo-> prepare($sql);
-        $stmt->execute(array(
-          ':name' => $nama,
-          ':email' => $email,
-          ':password' => password_hash($password, PASSWORD_DEFAULT),
-          ':nomor_telepon' => $nomor_telepon));
+                VALUES (?, ?, ?, ?)";
+        $stmt = $this->mysqli->prepare($sql);
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $stmt->bind_param("ssss", $nama, $email, $hashed_password, $nomor_telepon);
+        $stmt->execute();
         return $stmt;
     }
 
-    public function check_data($email){
-        $result = $this -> pdo -> prepare("SELECT email FROM users WHERE email = :email");
-        $result -> bindParam(':email', $email);
-        $result -> execute();
-        return $result -> rowCount();
+    public function check_data($email) {
+        $sql = "SELECT email FROM users WHERE email = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+        return $stmt->num_rows;
     }
 
     public function banyak_data(){
