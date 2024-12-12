@@ -4,9 +4,6 @@ class database {
 
     public function __construct() {
         try {
-            // Konfigurasi koneksi menggunakan SSL
-            $this->mysqli = mysqli_init();
-            mysqli_ssl_set($this->mysqli, NULL, NULL, "{path to CA cert}", NULL, NULL);
 
             // Koneksi ke database
             if (!mysqli_real_connect(
