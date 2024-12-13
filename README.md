@@ -1,12 +1,3 @@
-kami membuat website ini menggunakan template dibawah ini
-
-# Laundry OnLine
-
-### Dibuat oleh :
-1. Nur Hasana Abunawas
-2. Ichsanul Alifwan
-3. Dandy Garda Dirgantara
-
 
 ### Manual dan Fitur 
 Manual :
@@ -32,8 +23,8 @@ Fitur-fitur :
 ### Instalasi dan setting
 Untuk bisa menggunakan website ini, harus menyiapkan db dan table. Db dan tablenya sudah disediakan di file "laundry.sql", Load file "laundry.sql" ke server (phpmyadmin/HeidiSQL). Jika sudah, untuk login admin Laundry OnLine, bisa langsung masuk login.php dan mengisi E-mail dan password dibawah ini :
 
-- E-mail : admin@laundryonlinemks.com
-- Password : kucing123
+- E-mail : admin@gmail.com
+- Password : 123456
 
 Setelah selesai login, akan langsung diarahkan ke Dashboard Admin untuk mengatur pesanan dan pengguna.
 
